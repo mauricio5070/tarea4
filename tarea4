@@ -1,0 +1,122 @@
+import math
+import random
+
+class vehiculo:
+
+    def __init__(self, tipo):
+        self.ciclos=0
+        self.metros = 0
+        self.tipo = tipo
+        
+        
+    def fuerza(self):
+        return int(random.randrange(10))
+    def __str__(self):
+        return 'Tipo de vehiculo: {} \n' \
+               'Metros recorridos: {} \n' \
+               'Numero de ciclos {}\n'.format(self.tipo, self.metros, self.ciclos)
+    def getMetros(self):
+        return int(self.metros)
+    
+#----------------------------------------------------------------------------------------------------------------------    
+
+
+class camion(vehiculo):
+    def __init__(self):
+        super(camion, self).__init__(tipo='CAMION')
+        
+
+    def rendimiento(self):
+        ren=lambda x: 2 * x + 1
+        return ren(self.fuerza())
+    
+class tractor(vehiculo):
+    def __init__(self):
+        super(tractor, self).__init__(tipo='TRACTOR')
+        
+
+    def rendimiento(self):
+        ren=math.log2
+        x=ren(self.fuerza())
+        return x
+
+class sedan(vehiculo):
+    def __init__(self):
+        super(sedan, self).__init__(tipo='SEDAN')
+        
+
+    def rendimiento(self):
+        ren=lambda x: 3 * x**2
+        return ren(self.fuerza())
+
+class bus(vehiculo):
+    def __init__(self):
+        super(bus, self).__init__(tipo='BUS')
+        
+ 
+    def rendimiento(self):
+        ren=lambda x: 5*x
+        return ren(self.fuerza())
+
+#------------------------------------------------------------------------------------------------------------------------
+class carrera:
+    def __init__(self):
+        self.veh= []
+        self.lim= True
+        
+    
+    def agregar_vehiculo(self,x):
+        self.veh.append(x)
+
+    def avanzar(self):
+        total= len(self.veh)
+        for i in range(total):
+            carro= self.veh[i]
+            if carro.getMetros() < 1000:
+                
+                carro.metros=int(carro.metros)+carro.rendimiento()
+                carro.ciclos= int(carro.ciclos)+1
+    
+    def imprime (self):
+        for v in self.veh:
+            print(v)
+    def limite(self):
+        l=[]
+        for v in self.veh:
+            x=int(v.getMetros())
+            l.append(x)
+        for i in l:
+            if i>=1000:
+                self.lim=False
+                m=max(l)
+                return l.index(m)
+                
+    def correr(self):
+        total= len(self.veh)
+        for v in self.veh:
+            while self.lim == True:
+                self.avanzar()
+                x= self.limite()
+        print('----------------------------------------------------------------------------------------------------------\n')        
+        print('El Ganador es:\n')
+        print(self.veh[x])
+        print('Rendimiento maximo:\n',self.veh[x].getMetros())
+        print('----------------------------------------------------------------------------------------------------------\n')
+            
+#-------------------------------------------------------------------------------------------------------------------------        
+     
+C= camion()
+T= tractor()
+S=sedan()
+B=bus()
+
+race=carrera()
+
+race.agregar_vehiculo(C)
+#race.agregar_vehiculo(T)
+race.agregar_vehiculo(S)
+race.agregar_vehiculo(B)
+
+race.correr()
+print('-------------------------Tablas de competidores----------------\n')
+race.imprime()
