@@ -37,7 +37,7 @@ class tractor(vehiculo):
 
     def rendimiento(self):
         ren=math.log2
-        x=ren(self.fuerza())
+        x=ren(self.fuerza()+1)
         return x
 
 class sedan(vehiculo):
@@ -113,7 +113,7 @@ B=bus()
 race=carrera()
 
 race.agregar_vehiculo(C)
-#race.agregar_vehiculo(T)
+race.agregar_vehiculo(T)
 race.agregar_vehiculo(S)
 race.agregar_vehiculo(B)
 
